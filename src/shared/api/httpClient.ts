@@ -72,6 +72,12 @@ export async function httpRequest<T>(
   }
 
   // Парсим и возвращаем JSON
-  const data: T = await response.json();
+  const text = await response.text();
+  if (!text) {
+    // Пустое тело — это не ошибка для ReceiveNotification
+    return null as T;
+  }
+  const data: T = JSON.parse(text);
+
   return data;
 }

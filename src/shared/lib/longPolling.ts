@@ -11,7 +11,7 @@ type LongPollingCallbacks = {
   onError?: (error: unknown) => void;
 };
 
-export class LongPolling {
+class LongPolling {
   private running = false;
   private controller: AbortController | null = null;
 
@@ -77,3 +77,5 @@ export class LongPolling {
     }
   }
 }
+
+export default new LongPolling();
