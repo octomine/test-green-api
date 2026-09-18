@@ -1,5 +1,28 @@
 # Конвенции кода
 
+## Импорты React
+
+- **Всегда** named imports из `'react'`:
+  ```ts
+  import {
+    useState,
+    useId,
+    useRef,
+    type ChangeEvent,
+    type ComponentPropsWithoutRef,
+  } from "react";
+  ```
+- **Никогда** не использовать `import \* as React from 'react'` и обращения через `React.xxx`.
+  - ❌ `React.useId()`, `React.ChangeEvent<...>`, `React.ComponentPropsWithoutRef<...>`
+  - ✅ `useId()`, `ChangeEvent<...>`, `ComponentPropsWithoutRef<...>`
+
+### Типы React
+
+- **Никогда** не использовать `React.XxxType` без импорта `React`. Все типы импортируются named:
+  - ✅ `import { type ChangeEventHandler, type Ref, type ComponentPropsWithoutRef } from 'react';`
+  - ❌ `const handler: React.ChangeEventHandler<...>` (React не импортирован)
+  - ❌ `ref?: React.Ref<HTMLButtonElement>` (то же самое)
+
 ## Zustand-сторы
 
 ### Именование
@@ -122,6 +145,15 @@ useSessionStore.getState().credentials;
 
 `bg-error` перебьёт `bg-primary` из варианта `primary` — это ожидаемое поведение.
 
+### Arbitrary values в Tailwind
+
+- **Запрещены** arbitrary values вида `min-h-[80px]`, `w-[320px]`, `bg-[#abcdef]`.
+- Если нужен нестандартный размер — использовать ближайший токен Tailwind (`min-h-20` = 80px) или добавить токен в `@theme`.
+
+### Мёртвый код в компонентах
+
+- Не оставлять стили для неиспользуемых сценариев (`file:*` в текстовом `<input>`, `flex` на `<input>`, и т.п.).
+
 ### Dark mode
 
 Пока **не поддерживается**. Не добавляй `dark:` префиксы в компоненты. Если понадобится — сначала обсудить, потом менять `index.css`.
@@ -153,3 +185,11 @@ useSessionStore.getState().credentials;
 - Не использовать `React.FC`.
 - Не использовать `forwardRef` — React 19, `ref` передаётся как обычный проп при необходимости.
 - Не добавлять `'use client'` — это не Next.js.
+
+### ref в компонентах
+
+- Если компонент принимает `ref` — импортировать `type Ref` из `'react'`, **не** использовать `React.Ref`.
+  - ✅ `import { type Ref } from 'react'; ref?: Ref<HTMLButtonElement>`
+  - ❌ `ref?: React.Ref<HTMLButtonElement>` (без импорта `React`)
+- Не создавать `internalRef` / `combinedRef` — если компонент не использует ref внутри, пробрасывать `ref` напрямую в DOM-элемент.
+- `displayName` не указывать для именованных экспортов (`export const Button = ...`).
