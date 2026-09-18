@@ -15,7 +15,8 @@ src/
 ├── entities/ # Доменные сущности (session, chat, message)
 └── shared/ # Инфраструктура
     ├── api/ # httpClient, greenApi, types, errors
-    ├── lib/ # longPolling, storage
+    ├── lib/ # longPolling, storage, cn
+    ├── ui/ # UI-кит (Button, Input, Textarea, ...)
     └── config/ # env.ts
 
 ## Правила импортов (FSD)

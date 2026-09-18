@@ -37,17 +37,119 @@ useSessionStore.getState().credentials;
 ## Импорты
 
 ### Алиасы
+
 - Между слоями и сегментами — **всегда** через `@/`.
   - `@/shared/api`, `@/shared/lib/storage`, `@/entities/session`.
 - Внутри одного сегмента — относительные пути.
   - В `shared/api/greenApi.ts`: `import { httpRequest } from './httpClient'`.
 
 ### Публичный API
+
 - Импорт из другого сегмента — **только через `index.ts`**.
   - ✅ `import type { Credentials } from '@/shared/api'`
   - ❌ `import type { Credentials } from '@/shared/api/types'`
 
 ### `import type`
+
 - Только типы — `import type { X } from '...'`.
 - Только значения — `import { x } from '...'`.
 - Смешанные — **разделяй на два импорта**.
+
+## Тема Tailwind
+
+### Где живёт
+
+Все дизайн-токены определены через `@theme` в `src/app/styles/index.css`. Дублировать значения в компонентах **запрещено**.
+
+### Как использовать токены
+
+В компонентах **всегда** используются семантические Tailwind-классы, сгенерированные из темы, а **не** дефолтная палитра Tailwind:
+
+- ✅ `bg-primary`, `text-text-muted`, `border-border`, `bg-bg-chat`, `rounded-bubble`, `rounded-input`
+- ❌ `bg-blue-500`, `text-gray-500`, `border-gray-300`, `bg-slate-100`, `rounded-2xl`
+
+Дефолтные палитры (`blue-*`, `gray-*`, `slate-*`, `zinc-*`, `red-*` и т.д.) **не использовать** — только семантические токены из темы.
+
+### Доступные токены
+
+Цвета:
+
+- `primary`, `primary-hover` — акцент (кнопки, исходящие сообщения)
+- `bg`, `bg-chat`, `surface` — фоны (страница, лента чата, карточки)
+- `border` — границы
+- `text`, `text-muted` — основной и вторичный текст
+- `bubble-incoming`, `bubble-outgoing`, `bubble-outgoing-text` — пузыри сообщений
+- `error` — ошибки (валидация, статусы)
+
+Радиусы:
+
+- `rounded-bubble` — пузыри сообщений
+- `rounded-input` — поля ввода и кнопки
+
+Шрифт:
+
+- `font-sans` — основной (уже применён глобально на `body`)
+
+### Если нужен новый цвет или радиус
+
+1. **Не хардкодить** его в компоненте через arbitrary values (`bg-[#abcdef]`).
+2. **Добавить** в `@theme` в `src/app/styles/index.css` как новый токен.
+3. Только потом использовать в компонентах.
+
+Пример:
+
+```css
+@theme {
+  --color-success: #10b981;
+  /* ... */
+}
+```
+
+→ в компоненте: `text-success`, `bg-success`.
+
+### Правила использования в `cn`
+
+Поскольку установлен `tailwind-merge`, конфликтующие классы корректно переопределяются. Это значит:
+
+- Внешний `className` **может** перебивать базовые классы компонента.
+- Порядок классов в `cn` не важен для tailwind-merge.
+
+Пример:
+
+```tsx
+<Button className="bg-error">Удалить</Button>
+```
+
+`bg-error` перебьёт `bg-primary` из варианта `primary` — это ожидаемое поведение.
+
+### Dark mode
+
+Пока **не поддерживается**. Не добавляй `dark:` префиксы в компоненты. Если понадобится — сначала обсудить, потом менять `index.css`.
+
+## UI Kit (shared/ui)
+
+### Утилита `cn`
+
+- В проекте **установлены** `clsx` и `tailwind-merge`.
+- Утилита живёт в `src/shared/lib/cn.ts`.
+- Импорт: `import { cn } from '@/shared/lib';`.
+- **Всегда** используй `cn` для склейки Tailwind-классов, включая условные классы и проброс `className` снаружи.
+- **Не** используй конкатенацию через шаблонные строки для классов.
+- **Не** устанавливай `class-variance-authority` (cva) или другие альтернативы без явной просьбы.
+
+### Структура компонента
+
+- Каждый компонент — в своей папке: `shared/ui/ComponentName/`.
+- Файл: `ComponentName.tsx`, экспорт: `export const ComponentName`.
+- Обязательный `index.ts` в папке компонента: реэкспорт компонента и его пропсов.
+- Общий `src/shared/ui/index.ts` — реэкспорт всех компонентов кита.
+- Стили — **только** Tailwind-классы. Никаких CSS-модулей, inline-стилей, styled-components.
+
+### Пропсы
+
+- Типизация через `interface ComponentNameProps extends React.ComponentPropsWithoutRef<'button'|'input'|'textarea'|...>` плюс свои поля.
+- Проп `className?: string` — обязателен, мержится через `cn` в корневой элемент.
+- Варианты (`variant`, `size`) — через простой объект-маппинг или тернарники, **не** через `cva`.
+- Не использовать `React.FC`.
+- Не использовать `forwardRef` — React 19, `ref` передаётся как обычный проп при необходимости.
+- Не добавлять `'use client'` — это не Next.js.
