@@ -18,6 +18,7 @@
   /* Радиусы */
   --radius-bubble: 1.25rem;
   --radius-input: 0.75rem;
+  --radius-card: 1rem;
 
   /* Шрифт */
   --font-sans: system-ui, "Segoe UI", Roboto, sans-serif;

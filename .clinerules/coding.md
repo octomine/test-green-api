@@ -23,6 +23,14 @@
   - ❌ `const handler: React.ChangeEventHandler<...>` (React не импортирован)
   - ❌ `ref?: React.Ref<HTMLButtonElement>` (то же самое)
 
+### Типы событий формы
+
+- **Никогда** не использовать `FormEvent` и `FormEventHandler` — они устарели в React 19.2.10.
+- Для обработчиков `onSubmit` использовать:
+  - ✅ `import { type SubmitEvent } from 'react';`
+  - ✅ `const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => { ... }`
+- `SubmitEventHandler<HTMLFormElement>` — для типизации самой функции-обработчика.
+
 ## Zustand-сторы
 
 ### Именование
