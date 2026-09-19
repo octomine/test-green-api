@@ -25,9 +25,17 @@ const handleNotification = (notification: {
   const text = body.messageData.textMessageData?.textMessage;
   if (!text) return;
 
-  // Получить активный чат
+  // Только личные чаты
+  if (body.senderData?.chatType !== 'user') return;
+
+  // Только от собеседника активного чата
+  const senderPhone = body.senderData?.senderPhoneNumber;
+  if (senderPhone === undefined || senderPhone === null) return;
+
+  const normalizedSender = String(senderPhone).replace(/\D/g, '');
   const activeChatId = useChatStore.getState().activeChatId;
   if (activeChatId === null) return;
+  if (normalizedSender !== activeChatId) return;
 
   // Создать объект сообщения
   const message: Message = {
