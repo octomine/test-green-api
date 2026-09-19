@@ -6,6 +6,7 @@ import { useSessionStore } from '@/entities/session';
 
 export const LoginForm = () => {
   const { t } = useTranslation();
+
   const [idInstance, setIdInstance] = useState('');
   const [apiTokenInstance, setApiTokenInstance] = useState('');
   const [errors, setErrors] = useState<{

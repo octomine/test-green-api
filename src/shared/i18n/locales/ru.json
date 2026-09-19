@@ -10,7 +10,10 @@
   "chat": {
     "stubTitle": "Чат скоро будет",
     "instanceLabel": "Инстанс: {{id}}",
-    "logout": "Выйти"
+    "logout": "Выйти",
+    "activeChatLabel": "Чат с: {{id}}",
+    "newChat": "Новый чат",
+    "emptyMessages": "Нет сообщений"
   },
   "createChat": {
     "title": "Новый чат",
