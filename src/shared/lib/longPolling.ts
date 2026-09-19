@@ -1,5 +1,5 @@
-import { receiveNotification, deleteNotification } from "../api";
-import type { Credentials, NotificationBody } from "../api";
+import { receiveNotification, deleteNotification } from '../api';
+import type { Credentials, NotificationBody } from '../api';
 
 const RECEIVE_TIMEOUT = 30;
 
@@ -48,11 +48,7 @@ class LongPolling {
   ): Promise<void> {
     while (this.running) {
       try {
-        const notification = await receiveNotification(
-          credentials,
-          RECEIVE_TIMEOUT,
-          signal,
-        );
+        const notification = await receiveNotification(credentials, RECEIVE_TIMEOUT, signal);
 
         // Если уведомлений нет (таймаут), продолжаем цикл
         if (notification === null) continue;
@@ -64,7 +60,7 @@ class LongPolling {
         await deleteNotification(credentials, notification.receiptId);
       } catch (error) {
         // Если это AbortError (результат stop()), выходим из цикла
-        if (error instanceof Error && error.name === "AbortError") {
+        if (error instanceof Error && error.name === 'AbortError') {
           break;
         }
 

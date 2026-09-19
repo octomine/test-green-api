@@ -35,12 +35,12 @@ export const ChatPage = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col bg-bg-chat">
-      <header className="flex items-center justify-between gap-2 px-4 py-3 bg-surface border-b border-border">
-        <span className="text-text font-medium truncate">
+    <div className="bg-bg-chat flex h-screen flex-col">
+      <header className="bg-surface border-border flex items-center justify-between gap-2 border-b px-4 py-3">
+        <span className="text-text truncate font-medium">
           {t('chat.activeChatLabel', { id: activeChatId })}
         </span>
-        <div className="flex gap-2 shrink-0">
+        <div className="flex shrink-0 gap-2">
           <Button variant="ghost" size="sm" onClick={handleNewChat}>
             {t('chat.newChat')}
           </Button>

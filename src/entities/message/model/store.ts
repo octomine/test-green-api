@@ -1,5 +1,5 @@
-import { create } from "zustand";
-import type { Message } from "./types";
+import { create } from 'zustand';
+import type { Message } from './types';
 
 interface MessageState {
   messagesByChatId: Record<string, Message[]>;
@@ -10,19 +10,19 @@ interface MessageState {
 
 export const useMessageStore = create<MessageState>()((set) => ({
   messagesByChatId: {},
-  
+
   addMessage: (message: Message) => {
     set((state) => {
       const chatMessages = state.messagesByChatId[message.chatId] || [];
-      
+
       // Дедупликация: если сообщение с таким id уже есть, не добавляем
       if (chatMessages.some((msg) => msg.id === message.id)) {
         return state;
       }
-      
+
       // Создаем новый массив с добавленным сообщением
       const updatedChatMessages = [...chatMessages, message];
-      
+
       return {
         messagesByChatId: {
           ...state.messagesByChatId,
@@ -31,7 +31,7 @@ export const useMessageStore = create<MessageState>()((set) => ({
       };
     });
   },
-  
+
   clearMessages: (chatId: string) => {
     set((state) => ({
       messagesByChatId: {
@@ -40,7 +40,7 @@ export const useMessageStore = create<MessageState>()((set) => ({
       },
     }));
   },
-  
+
   clearAllMessages: () => {
     set({ messagesByChatId: {} });
   },

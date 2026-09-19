@@ -1,10 +1,10 @@
-import { create } from "zustand";
-import type { Credentials } from "@/shared/api";
+import { create } from 'zustand';
+import type { Credentials } from '@/shared/api';
 import {
   loadCredentials,
   saveCredentials as saveStoredCredentials,
   clearCredentials as clearStoredCredentials,
-} from "@/shared/lib";
+} from '@/shared/lib';
 
 interface SessionState {
   credentials: Credentials | null;

@@ -1,7 +1,4 @@
-import {
-  type ComponentPropsWithoutRef,
-  type Ref,
-} from 'react';
+import { type ComponentPropsWithoutRef, type Ref } from 'react';
 import { cn } from '@/shared/lib';
 
 export interface ButtonProps extends ComponentPropsWithoutRef<'button'> {
@@ -34,10 +31,10 @@ export const Button = ({
       ref={ref}
       type={type}
       className={cn(
-        'inline-flex items-center justify-center whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+        'focus-visible:ring-primary inline-flex items-center justify-center font-medium whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50',
         variantStyles[variant],
         sizeStyles[size],
-        className
+        className,
       )}
       {...props}
     />

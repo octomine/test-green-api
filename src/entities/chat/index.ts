@@ -1,1 +1,1 @@
-export { useChatStore } from "./model/store";
+export { useChatStore } from './model/store';

@@ -42,9 +42,9 @@ export const LoginForm = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-bg">
-      <div className="w-full max-w-sm bg-surface rounded-card p-6 flex flex-col gap-4">
-        <h1 className="text-xl font-medium text-text">{t('auth.title')}</h1>
+    <div className="bg-bg flex min-h-screen items-center justify-center">
+      <div className="bg-surface rounded-card flex w-full max-w-sm flex-col gap-4 p-6">
+        <h1 className="text-text text-xl font-medium">{t('auth.title')}</h1>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <Input
             label={t('auth.idInstanceLabel')}

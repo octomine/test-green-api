@@ -16,7 +16,7 @@ export const MessageInput = ({ chatId }: MessageInputProps) => {
 
   const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     // Если текст пустой - ничего не делаем
     if (!text.trim()) {
       return;
@@ -40,10 +40,10 @@ export const MessageInput = ({ chatId }: MessageInputProps) => {
   };
 
   return (
-    <form 
+    <form
       ref={formRef}
-      onSubmit={handleSubmit} 
-      className="flex items-end gap-2 p-3 border-t border-border bg-surface"
+      onSubmit={handleSubmit}
+      className="border-border bg-surface flex items-end gap-2 border-t p-3"
     >
       <Textarea
         value={text}
@@ -59,10 +59,7 @@ export const MessageInput = ({ chatId }: MessageInputProps) => {
         onKeyDown={handleKeyDown}
         error={error}
       />
-      <Button 
-        type="submit" 
-        disabled={isSending || !text.trim()}
-      >
+      <Button type="submit" disabled={isSending || !text.trim()}>
         {t('chat.send')}
       </Button>
     </form>

@@ -1,11 +1,11 @@
-import { API_URL } from "../config/env";
-import { HttpError } from "./errors";
+import { API_URL } from '../config/env';
+import { HttpError } from './errors';
 
 /**
  * Опции для HTTP запроса
  */
 export type RequestOptions = {
-  method?: "GET" | "POST" | "DELETE" | "PUT";
+  method?: 'GET' | 'POST' | 'DELETE' | 'PUT';
   body?: unknown;
   signal?: AbortSignal;
   headers?: Record<string, string>;
@@ -20,28 +20,23 @@ export type RequestOptions = {
  * @returns Promise с данными типа T или undefined для 204 статуса
  * @throws HttpError в случае ошибки HTTP
  */
-export async function httpRequest<T>(
-  path: string,
-  options: RequestOptions = {},
-): Promise<T> {
+export async function httpRequest<T>(path: string, options: RequestOptions = {}): Promise<T> {
   // Формируем полный URL
-  const fullPath = path.startsWith("/") ? path : `/${path}`;
+  const fullPath = path.startsWith('/') ? path : `/${path}`;
   const url = `${API_URL}${fullPath}`;
 
   // Подготавливаем опции для fetch
   const fetchOptions: RequestInit = {
-    method: options.method || "GET",
+    method: options.method || 'GET',
     signal: options.signal,
   };
 
   // Создаем новый объект заголовков, не мутируя входной options.headers
-  const headers: Record<string, string> = options.headers
-    ? { ...options.headers }
-    : {};
+  const headers: Record<string, string> = options.headers ? { ...options.headers } : {};
 
   // Добавляем Content-Type только если body определен
   if (options.body !== undefined) {
-    headers["Content-Type"] = "application/json";
+    headers['Content-Type'] = 'application/json';
     fetchOptions.body = JSON.stringify(options.body);
   }
 

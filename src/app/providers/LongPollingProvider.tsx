@@ -9,10 +9,7 @@ interface LongPollingProviderProps {
   children: ReactNode;
 }
 
-const handleNotification = (notification: {
-  receiptId: number;
-  body: NotificationBody;
-}) => {
+const handleNotification = (notification: { receiptId: number; body: NotificationBody }) => {
   const { body } = notification;
 
   // Пропустить всё, кроме incomingMessageReceived

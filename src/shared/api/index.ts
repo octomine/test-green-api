@@ -1,11 +1,7 @@
-export { httpRequest } from "./httpClient";
-export type { RequestOptions } from "./httpClient";
-export { HttpError } from "./errors";
-export {
-  sendMessage,
-  receiveNotification,
-  deleteNotification,
-} from "./greenApi";
+export { httpRequest } from './httpClient';
+export type { RequestOptions } from './httpClient';
+export { HttpError } from './errors';
+export { sendMessage, receiveNotification, deleteNotification } from './greenApi';
 export type {
   Credentials,
   SendMessageRequest,
@@ -13,4 +9,4 @@ export type {
   NotificationBody,
   ReceiveNotificationResponse,
   DeleteNotificationResponse,
-} from "./types";
+} from './types';

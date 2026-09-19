@@ -27,9 +27,7 @@ export const NewChatForm = () => {
     }
 
     // Нормализация номера (убираем + в начале)
-    const normalizedPhone = cleanedPhone.startsWith('+')
-      ? cleanedPhone.slice(1)
-      : cleanedPhone;
+    const normalizedPhone = cleanedPhone.startsWith('+') ? cleanedPhone.slice(1) : cleanedPhone;
 
     // Устанавливаем активный чат
     useChatStore.getState().setActiveChatId(normalizedPhone);
@@ -39,9 +37,9 @@ export const NewChatForm = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-bg">
-      <div className="w-full max-w-sm bg-surface rounded-input p-6 flex flex-col gap-4">
-        <h1 className="text-xl font-medium text-text">{t('createChat.title')}</h1>
+    <div className="bg-bg flex min-h-screen items-center justify-center">
+      <div className="bg-surface rounded-input flex w-full max-w-sm flex-col gap-4 p-6">
+        <h1 className="text-text text-xl font-medium">{t('createChat.title')}</h1>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <Input
             label={t('createChat.phoneLabel')}

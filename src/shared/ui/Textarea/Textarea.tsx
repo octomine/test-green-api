@@ -53,22 +53,22 @@ export const Textarea = ({
   }, [autoResize, props.value]);
 
   // Объединяем ref'ы
-  const combinedRefCallback = useCallback((node: HTMLTextAreaElement) => {
-    textareaRef.current = node;
-    if (typeof ref === 'function') {
-      ref(node);
-    } else if (ref) {
-      ref.current = node;
-    }
-  }, [ref]);
+  const combinedRefCallback = useCallback(
+    (node: HTMLTextAreaElement) => {
+      textareaRef.current = node;
+      if (typeof ref === 'function') {
+        ref(node);
+      } else if (ref) {
+        ref.current = node;
+      }
+    },
+    [ref],
+  );
 
   return (
     <div className="w-full">
       {label && (
-        <label
-          htmlFor={textareaId}
-          className="block text-sm font-medium text-text mb-1"
-        >
+        <label htmlFor={textareaId} className="text-text mb-1 block text-sm font-medium">
           {label}
         </label>
       )}
@@ -76,16 +76,14 @@ export const Textarea = ({
         ref={combinedRefCallback}
         id={textareaId}
         className={cn(
-          'flex min-h-20 w-full rounded-input border border-border bg-surface px-3 py-2 text-sm placeholder:text-text-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
+          'rounded-input border-border bg-surface placeholder:text-text-muted focus-visible:ring-primary flex min-h-20 w-full border px-3 py-2 text-sm focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
           error && 'border-error focus-visible:ring-error',
-          className
+          className,
         )}
         onChange={handleChange}
         {...props}
       />
-      {error && (
-        <p className="text-sm text-error mt-1">{error}</p>
-      )}
+      {error && <p className="text-error mt-1 text-sm">{error}</p>}
     </div>
   );
 };

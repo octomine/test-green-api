@@ -1,12 +1,10 @@
-import { useState, useCallback } from "react";
-import { sendMessage } from "@/shared/api";
-import { useSessionStore } from "@/entities/session";
-import { useMessageStore } from "@/entities/message";
-import type { Message } from "@/entities/message";
+import { useState, useCallback } from 'react';
+import { sendMessage } from '@/shared/api';
+import { useSessionStore } from '@/entities/session';
+import { useMessageStore } from '@/entities/message';
+import type { Message } from '@/entities/message';
 
-type SendResult =
-  | { success: true }
-  | { success: false; errorKey: 'noCredentials' | 'sendError' };
+type SendResult = { success: true } | { success: false; errorKey: 'noCredentials' | 'sendError' };
 
 export const useSendMessage = (chatId: string) => {
   const [isSending, setIsSending] = useState<boolean>(false);
@@ -51,7 +49,7 @@ export const useSendMessage = (chatId: string) => {
 
         return { success: true };
       } catch (error) {
-        console.error("Failed to send message:", error);
+        console.error('Failed to send message:', error);
         return { success: false, errorKey: 'sendError' };
       } finally {
         // Сбрасываем флаг отправки

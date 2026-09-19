@@ -1,11 +1,11 @@
-import { httpRequest } from "./httpClient";
+import { httpRequest } from './httpClient';
 import type {
   Credentials,
   SendMessageRequest,
   SendMessageResponse,
   ReceiveNotificationResponse,
   DeleteNotificationResponse,
-} from "./types";
+} from './types';
 
 export function sendMessage(
   credentials: Credentials,
@@ -21,7 +21,7 @@ export function sendMessage(
   };
 
   return httpRequest<SendMessageResponse>(path, {
-    method: "POST",
+    method: 'POST',
     body: requestBody,
   });
 }
@@ -37,7 +37,7 @@ export function receiveNotification(
   const path = `/waInstance${idInstance}/receiveNotification/${apiTokenInstance}?receiveTimeout=${timeout}`;
 
   return httpRequest<ReceiveNotificationResponse>(path, {
-    method: "GET",
+    method: 'GET',
     signal,
   });
 }
@@ -50,6 +50,6 @@ export function deleteNotification(
   const path = `/waInstance${idInstance}/deleteNotification/${apiTokenInstance}/${receiptId}`;
 
   return httpRequest<DeleteNotificationResponse>(path, {
-    method: "DELETE",
+    method: 'DELETE',
   });
 }

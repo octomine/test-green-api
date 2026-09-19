@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
   /* Цвета */
@@ -21,7 +21,7 @@
   --radius-card: 1rem;
 
   /* Шрифт */
-  --font-sans: system-ui, "Segoe UI", Roboto, sans-serif;
+  --font-sans: system-ui, 'Segoe UI', Roboto, sans-serif;
 }
 
 /* Глобальные сбросы */

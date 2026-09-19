@@ -1,10 +1,9 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
-const modules = import.meta.glob<{ default: Record<string, unknown> }>(
-  './locales/*.json',
-  { eager: true },
-);
+const modules = import.meta.glob<{ default: Record<string, unknown> }>('./locales/*.json', {
+  eager: true,
+});
 
 const resources: Record<string, { translation: Record<string, unknown> }> = {};
 for (const path in modules) {
