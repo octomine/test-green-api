@@ -1,16 +1,20 @@
 import { useSessionStore } from '@/entities/session';
 import { useChatStore } from '@/entities/chat';
-import { useMessageStore } from '@/entities/message';
+import { useMessageStore, MessageList, type Message } from '@/entities/message';
 import { LoginForm } from '@/features/auth';
 import { NewChatForm } from '@/features/create-chat';
+import { MessageInput } from '@/features/send-message';
 import { Button } from '@/shared/ui';
 import { useTranslation } from '@/shared/i18n';
+
+const EMPTY_MESSAGES: Message[] = [];
 
 export const ChatPage = () => {
   const { t } = useTranslation();
 
   const credentials = useSessionStore((s) => s.credentials);
   const activeChatId = useChatStore((s) => s.activeChatId);
+  const messages = useMessageStore((s) => s.messagesByChatId[activeChatId ?? ''] ?? EMPTY_MESSAGES);
 
   if (credentials === null) {
     return <LoginForm />;
@@ -31,28 +35,22 @@ export const ChatPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-bg">
-      <div className="w-full max-w-sm bg-surface rounded-input p-6 flex flex-col gap-4 items-center">
-        <h1 className="text-xl font-medium text-text">{t('chat.stubTitle')}</h1>
-        <p className="text-text-muted text-sm">{t('chat.instanceLabel', { id: credentials.idInstance })}</p>
-        <p className="text-text text-sm">{t('chat.activeChatLabel', { id: activeChatId })}</p>
-        <div className="flex gap-2 w-full">
-          <Button
-            variant="secondary"
-            className="flex-1"
-            onClick={handleNewChat}
-          >
+    <div className="h-screen flex flex-col bg-bg-chat">
+      <header className="flex items-center justify-between gap-2 px-4 py-3 bg-surface border-b border-border">
+        <span className="text-text font-medium truncate">
+          {t('chat.activeChatLabel', { id: activeChatId })}
+        </span>
+        <div className="flex gap-2 shrink-0">
+          <Button variant="ghost" size="sm" onClick={handleNewChat}>
             {t('chat.newChat')}
           </Button>
-          <Button
-            variant="secondary"
-            className="flex-1"
-            onClick={handleLogout}
-          >
+          <Button variant="ghost" size="sm" onClick={handleLogout}>
             {t('chat.logout')}
           </Button>
         </div>
-      </div>
+      </header>
+      <MessageList messages={messages} />
+      <MessageInput chatId={activeChatId} />
     </div>
   );
 };

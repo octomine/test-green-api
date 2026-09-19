@@ -65,6 +65,15 @@ useSessionStore.getState().credentials;
   import { clearCredentials as clearStoredCredentials } from "@/shared/lib/storage";
   ```
 
+### Селекторы Zustand
+
+- **Никогда** не возвращать из селектора новые объекты или массивы (`{}`, `[]`, `map(...)`, `filter(...)`) без стабилизации — это вызывает бесконечные ререндеры.
+- Для «пустых» значений использовать константы модуля:
+  ```ts
+  const EMPTY_MESSAGES: Message[] = [];
+  const messages = useMessageStore((s) => s.map[key] ?? EMPTY_MESSAGES);
+  ```
+
 ## Импорты
 
 ### Алиасы

@@ -13,7 +13,9 @@
     "logout": "Выйти",
     "activeChatLabel": "Чат с: {{id}}",
     "newChat": "Новый чат",
-    "emptyMessages": "Нет сообщений"
+    "emptyMessages": "Нет сообщений",
+    "inputPlaceholder": "Введите сообщение",
+    "send": "Отправить"
   },
   "createChat": {
     "title": "Новый чат",
