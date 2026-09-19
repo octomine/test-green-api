@@ -220,7 +220,7 @@ useSessionStore.getState().credentials;
 
 - Единственная точка входа: `import { useTranslation } from '@/shared/i18n';`
 - **Никогда** не импортировать `useTranslation` напрямую из `'react-i18next'` — только через `@/shared/i18n`.
-- В компоненте: `const { t } = useTranslation();`
+- В компоненте: `const { t } = useTranslation();`, всегда в самом начале, после пустая строка
 
 ### Использование в компонентах
 

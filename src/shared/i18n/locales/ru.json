@@ -11,5 +11,13 @@
     "stubTitle": "Чат скоро будет",
     "instanceLabel": "Инстанс: {{id}}",
     "logout": "Выйти"
+  },
+  "createChat": {
+    "title": "Новый чат",
+    "phoneLabel": "Номер телефона получателя",
+    "phonePlaceholder": "79991234567",
+    "phoneRequired": "Введите номер телефона",
+    "phoneInvalid": "Только цифры, возможно с + в начале",
+    "submit": "Создать чат"
   }
 }
