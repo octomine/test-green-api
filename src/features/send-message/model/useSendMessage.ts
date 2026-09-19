@@ -40,8 +40,11 @@ export const useSendMessage = (chatId: string) => {
         // Добавляем оптимистичное сообщение в хранилище
         useMessageStore.getState().addMessage(message);
 
+        // Конвертируем chatId в формат API
+        const apiChatId = chatId.includes('@') ? chatId : `${chatId}@c.us`;
+        
         // Отправляем сообщение
-        await sendMessage(credentials, chatId, text.trim());
+        await sendMessage(credentials, apiChatId, text.trim());
 
         // Обновляем оптимистичное сообщение реальным id
         // TODO: Здесь нужно реализовать обновление сообщения с временным ID на реальный ID
