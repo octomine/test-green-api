@@ -10,6 +10,7 @@ export interface MessageInputProps {
 export const MessageInput = ({ chatId }: MessageInputProps) => {
   const { t } = useTranslation();
   const [text, setText] = useState('');
+  const [error, setError] = useState<string | undefined>(undefined);
   const formRef = useRef<HTMLFormElement>(null);
   const { send, isSending } = useSendMessage(chatId);
 
@@ -21,11 +22,14 @@ export const MessageInput = ({ chatId }: MessageInputProps) => {
       return;
     }
 
-    // Отправляем сообщение
-    await send(text);
-    
-    // Очищаем поле ввода
-    setText('');
+    setError(undefined);
+    const result = await send(text);
+
+    if (result.success) {
+      setText('');
+    } else {
+      setError(t(`chat.${result.errorKey}`));
+    }
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -43,13 +47,17 @@ export const MessageInput = ({ chatId }: MessageInputProps) => {
     >
       <Textarea
         value={text}
-        onChange={(e) => setText(e.target.value)}
+        onChange={(e) => {
+          setText(e.target.value);
+          if (error) setError(undefined);
+        }}
         placeholder={t('chat.inputPlaceholder')}
         autoResize
         rows={1}
         className="flex-1"
         disabled={isSending}
         onKeyDown={handleKeyDown}
+        error={error}
       />
       <Button 
         type="submit" 

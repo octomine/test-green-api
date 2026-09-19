@@ -4,23 +4,26 @@ import { useSessionStore } from "@/entities/session";
 import { useMessageStore } from "@/entities/message";
 import type { Message } from "@/entities/message";
 
+type SendResult =
+  | { success: true }
+  | { success: false; errorKey: 'noCredentials' | 'sendError' };
+
 export const useSendMessage = (chatId: string) => {
   const [isSending, setIsSending] = useState<boolean>(false);
 
   const send = useCallback(
-    async (text: string) => {
-      // Если текст пустой - ничего не делаем
+    async (text: string): Promise<SendResult> => {
+      // Если текст пустой - возвращаем ошибку
       if (!text.trim()) {
-        return;
+        return { success: false, errorKey: 'sendError' };
       }
 
       // Получаем учетные данные
       const credentials = useSessionStore.getState().credentials;
 
-      // Если нет учетных данных - выводим ошибку
+      // Если нет учетных данных - возвращаем ошибку
       if (!credentials) {
-        console.error("No credentials found");
-        return;
+        return { success: false, errorKey: 'noCredentials' };
       }
 
       // Устанавливаем флаг отправки
@@ -42,17 +45,14 @@ export const useSendMessage = (chatId: string) => {
 
         // Конвертируем chatId в формат API
         const apiChatId = chatId.includes('@') ? chatId : `${chatId}@c.us`;
-        
+
         // Отправляем сообщение
         await sendMessage(credentials, apiChatId, text.trim());
 
-        // Обновляем оптимистичное сообщение реальным id
-        // TODO: Здесь нужно реализовать обновление сообщения с временным ID на реальный ID
-        // Пока оставим как есть, так как для демонстрации этого достаточно
+        return { success: true };
       } catch (error) {
         console.error("Failed to send message:", error);
-        // TODO: Здесь нужно удалить оптимистичное сообщение при ошибке
-        // Пока оставим как есть, так как для демонстрации этого достаточно
+        return { success: false, errorKey: 'sendError' };
       } finally {
         // Сбрасываем флаг отправки
         setIsSending(false);
