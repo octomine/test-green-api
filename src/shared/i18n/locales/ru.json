@@ -1,0 +1,15 @@
+{
+  "auth": {
+    "title": "Вход в GREEN-API MAX",
+    "idInstanceLabel": "ID Instance",
+    "idInstanceRequired": "ID Instance обязателен",
+    "apiTokenLabel": "API Token Instance",
+    "apiTokenRequired": "API Token Instance обязателен",
+    "submit": "Войти"
+  },
+  "chat": {
+    "stubTitle": "Чат скоро будет",
+    "instanceLabel": "Инстанс: {{id}}",
+    "logout": "Выйти"
+  }
+}

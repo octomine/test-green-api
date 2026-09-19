@@ -1,9 +1,11 @@
 import { useState, type SubmitEvent } from 'react';
 import { Input, Button } from '@/shared/ui';
+import { useTranslation } from '@/shared/i18n';
 
 import { useSessionStore } from '@/entities/session';
 
 export const LoginForm = () => {
+  const { t } = useTranslation();
   const [idInstance, setIdInstance] = useState('');
   const [apiTokenInstance, setApiTokenInstance] = useState('');
   const [errors, setErrors] = useState<{
@@ -17,10 +19,10 @@ export const LoginForm = () => {
     // Простейшая валидация
     const newErrors: typeof errors = {};
     if (!idInstance.trim()) {
-      newErrors.idInstance = 'ID Instance обязателен';
+      newErrors.idInstance = t('auth.idInstanceRequired');
     }
     if (!apiTokenInstance.trim()) {
-      newErrors.apiTokenInstance = 'API Token Instance обязателен';
+      newErrors.apiTokenInstance = t('auth.apiTokenRequired');
     }
 
     if (Object.keys(newErrors).length > 0) {
@@ -41,10 +43,10 @@ export const LoginForm = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-bg">
       <div className="w-full max-w-sm bg-surface rounded-card p-6 flex flex-col gap-4">
-        <h1 className="text-xl font-medium text-text">Вход в GREEN-API MAX</h1>
+        <h1 className="text-xl font-medium text-text">{t('auth.title')}</h1>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <Input
-            label="ID Instance"
+            label={t('auth.idInstanceLabel')}
             type="text"
             value={idInstance}
             onChange={(e) => setIdInstance(e.target.value)}
@@ -52,14 +54,14 @@ export const LoginForm = () => {
             autoFocus
           />
           <Input
-            label="API Token Instance"
+            label={t('auth.apiTokenLabel')}
             type="password"
             value={apiTokenInstance}
             onChange={(e) => setApiTokenInstance(e.target.value)}
             error={errors.apiTokenInstance}
           />
           <Button type="submit" className="w-full">
-            Войти
+            {t('auth.submit')}
           </Button>
         </form>
       </div>
