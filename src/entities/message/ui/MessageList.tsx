@@ -17,13 +17,15 @@ export const MessageList = ({ messages }: MessageListProps) => {
   }, [messages.length]);
 
   return (
-    <div className="bg-bg-chat flex flex-1 flex-col gap-2 overflow-y-auto p-4">
-      {messages.length === 0 ? (
-        <p className="text-text-muted m-auto text-center text-sm">{t('chat.emptyMessages')}</p>
-      ) : (
-        messages.map((message) => <MessageBubble key={message.id} message={message} />)
-      )}
-      <div ref={bottomRef} />
+    <div className="bg-bg-chat flex-1 overflow-y-auto">
+      <div className="mx-auto flex min-h-full max-w-3xl flex-col justify-end gap-1 p-4">
+        {messages.length === 0 ? (
+          <p className="text-text-muted m-auto text-center text-sm">{t('chat.emptyMessages')}</p>
+        ) : (
+          messages.map((message) => <MessageBubble key={message.id} message={message} />)
+        )}
+        <div ref={bottomRef} />
+      </div>
     </div>
   );
 };

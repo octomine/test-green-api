@@ -76,7 +76,7 @@ export const Textarea = ({
         ref={combinedRefCallback}
         id={textareaId}
         className={cn(
-          'rounded-input border-border bg-surface placeholder:text-text-muted focus-visible:ring-primary flex min-h-20 w-full border px-3 py-2 text-sm focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
+          'rounded-input border-border bg-surface placeholder:text-text-muted focus-visible:ring-primary flex min-h-20 w-full resize-none border px-3 py-2 text-sm focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
           error && 'border-error focus-visible:ring-error',
           className,
         )}

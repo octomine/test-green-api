@@ -3,7 +3,7 @@ import { cn } from '@/shared/lib';
 
 export interface ButtonProps extends ComponentPropsWithoutRef<'button'> {
   variant?: 'primary' | 'secondary' | 'ghost';
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'sm' | 'md' | 'lg' | 'icon';
 }
 
 const variantStyles = {
@@ -16,6 +16,7 @@ const sizeStyles = {
   sm: 'h-8 px-3 text-sm rounded-input',
   md: 'h-10 px-4 text-base rounded-input',
   lg: 'h-12 px-6 text-lg rounded-input',
+  icon: 'h-10 w-10 p-0 rounded-full',
 };
 
 export const Button = ({

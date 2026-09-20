@@ -1,23 +1,32 @@
 @import 'tailwindcss';
 
 @theme {
-  /* Цвета */
-  --color-primary: #3b82f6;
-  --color-primary-hover: #2563eb;
+  /* Фоны */
   --color-bg: #ffffff;
-  --color-bg-chat: #f5f6f8;
+  --color-bg-chat: #c7e0f5;
   --color-surface: #ffffff;
-  --color-border: #e5e7eb;
-  --color-text: #1f2937;
-  --color-text-muted: #6b7280;
+
+  /* Пузыри */
   --color-bubble-incoming: #ffffff;
-  --color-bubble-outgoing: #3b82f6;
-  --color-bubble-outgoing-text: #ffffff;
+  --color-bubble-incoming-text: #1a1a1a;
+  --color-bubble-outgoing: #a8d5f0;
+  --color-bubble-outgoing-text: #1a1a1a;
+
+  /* Акцент */
+  --color-primary: #2aabee;
+  --color-primary-hover: #1e9ad6;
+
+  /* Текст */
+  --color-text: #1a1a1a;
+  --color-text-muted: #8e8e93;
+
+  /* Границы, ошибки */
+  --color-border: #e5e7eb;
   --color-error: #ef4444;
 
   /* Радиусы */
-  --radius-bubble: 1.25rem;
-  --radius-input: 0.75rem;
+  --radius-bubble: 1rem;
+  --radius-input: 1.5rem;
   --radius-card: 1rem;
 
   /* Шрифт */
