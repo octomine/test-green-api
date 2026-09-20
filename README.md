@@ -23,6 +23,8 @@
 ## Установка и запуск
 
 ```bash
+git clone https://github.com/octomine/test-green-api.git
+cd test-green-api
 pnpm install
 pnpm dev
 ```
