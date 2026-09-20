@@ -5,6 +5,7 @@ import type {
   SendMessageResponse,
   ReceiveNotificationResponse,
   DeleteNotificationResponse,
+  GetStateInstanceResponse,
 } from './types';
 
 export function sendMessage(
@@ -52,4 +53,12 @@ export function deleteNotification(
   return httpRequest<DeleteNotificationResponse>(path, {
     method: 'DELETE',
   });
+}
+
+export function getStateInstance(
+  credentials: Credentials,
+): Promise<GetStateInstanceResponse> {
+  const { idInstance, apiTokenInstance } = credentials;
+  const path = `/waInstance${idInstance}/getStateInstance/${apiTokenInstance}`;
+  return httpRequest<GetStateInstanceResponse>(path, { method: 'GET' });
 }

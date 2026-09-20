@@ -5,7 +5,9 @@
     "idInstanceRequired": "ID Instance обязателен",
     "apiTokenLabel": "API Token Instance",
     "apiTokenRequired": "API Token Instance обязателен",
-    "submit": "Войти"
+    "submit": "Войти",
+    "checking": "Проверяем...",
+    "invalidCredentials": "Неверные idInstance или apiTokenInstance"
   },
   "chat": {
     "stubTitle": "Чат скоро будет",
@@ -24,7 +26,8 @@
     "phoneLabel": "Номер телефона получателя",
     "phonePlaceholder": "79991234567",
     "phoneRequired": "Введите номер телефона",
-    "phoneInvalid": "Только цифры, возможно с + в начале",
+    "phoneInvalidChars": "Номер должен содержать только цифры",
+    "phoneInvalidLength": "Номер должен содержать 10–15 цифр",
     "submit": "Создать чат"
   }
 }

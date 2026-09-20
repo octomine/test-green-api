@@ -13,24 +13,30 @@ export const NewChatForm = () => {
     e.preventDefault();
 
     // Очистка номера от пробелов, дефисов и скобок
-    const cleanedPhone = phone.replace(/[\s\-()]/g, '');
+    const cleaned = phone.replace(/[\s\-()]/g, '');
 
-    // Валидация
-    if (!cleanedPhone.trim()) {
+    // Проверка на пустоту
+    if (!cleaned) {
       setError(t('createChat.phoneRequired'));
       return;
     }
 
-    if (!/^\+?\d{10,15}$/.test(cleanedPhone)) {
-      setError(t('createChat.phoneInvalid'));
+    // Проверка символов (только цифры, возможно с + в начале)
+    const digitsOnly = cleaned.startsWith('+') ? cleaned.slice(1) : cleaned;
+    if (!/^\d+$/.test(digitsOnly)) {
+      setError(t('createChat.phoneInvalidChars'));
       return;
     }
 
-    // Нормализация номера (убираем + в начале)
-    const normalizedPhone = cleanedPhone.startsWith('+') ? cleanedPhone.slice(1) : cleanedPhone;
+    // Проверка длины
+    if (digitsOnly.length < 10 || digitsOnly.length > 15) {
+      setError(t('createChat.phoneInvalidLength'));
+      return;
+    }
 
-    // Устанавливаем активный чат
-    useChatStore.getState().setActiveChatId(normalizedPhone);
+    // Нормализация
+    const normalized = digitsOnly;
+    useChatStore.getState().setActiveChatId(normalized);
 
     // Очищаем ошибки если форма успешна
     setError(undefined);

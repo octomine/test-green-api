@@ -10,6 +10,7 @@ type LongPollingCallbacks = {
     body: NotificationBody;
   }) => void | Promise<void>;
   onError?: (error: unknown) => void;
+  onUnauthorized?: () => void;
 };
 
 class LongPolling {
@@ -68,6 +69,12 @@ class LongPolling {
         // Если это HTTP 408 (таймаут от GREEN-API), продолжаем цикл
         if (error instanceof HttpError && error.status === 408) {
           continue;
+        }
+
+        // Если это HTTP 401 или 403 (неавторизован), вызываем onUnauthorized и выходим
+        if (error instanceof HttpError && (error.status === 401 || error.status === 403)) {
+          callbacks.onUnauthorized?.();
+          break;
         }
 
         // Вызываем onError callback, если он определен

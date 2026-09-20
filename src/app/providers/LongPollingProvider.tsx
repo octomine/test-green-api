@@ -56,6 +56,11 @@ export const LongPollingProvider = ({ children }: LongPollingProviderProps) => {
     longPolling.start(credentials, {
       onNotification: handleNotification,
       onError: (error) => console.error('[longPolling]', error),
+      onUnauthorized: () => {
+        useSessionStore.getState().clearCredentials();
+        useChatStore.getState().clearActiveChatId();
+        useMessageStore.getState().clearAllMessages();
+      },
     });
 
     return () => {

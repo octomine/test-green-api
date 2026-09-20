@@ -36,3 +36,7 @@ export type ReceiveNotificationResponse = {
 export type DeleteNotificationResponse = {
   result: boolean;
 };
+
+export type GetStateInstanceResponse = {
+  stateInstance: 'authorized' | 'notAuthorized' | 'blocked' | 'starting' | 'yellowCard' | 'suspended';
+};

@@ -3,6 +3,7 @@ import { Input, Button } from '@/shared/ui';
 import { useTranslation } from '@/shared/i18n';
 
 import { useSessionStore } from '@/entities/session';
+import { getStateInstance } from '@/shared/api';
 
 export const LoginForm = () => {
   const { t } = useTranslation();
@@ -13,8 +14,10 @@ export const LoginForm = () => {
     idInstance?: string;
     apiTokenInstance?: string;
   }>({});
+  const [isChecking, setIsChecking] = useState(false);
+  const [formError, setFormError] = useState<string | undefined>(undefined);
 
-  const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // Простейшая валидация
@@ -33,12 +36,24 @@ export const LoginForm = () => {
 
     // Очищаем ошибки если они были
     setErrors({});
+    setFormError(undefined);
+    setIsChecking(true);
 
-    // Сохраняем учетные данные
-    useSessionStore.getState().setCredentials({
-      idInstance,
-      apiTokenInstance,
-    });
+    try {
+      // Проверяем учетные данные
+      await getStateInstance({ idInstance, apiTokenInstance });
+
+      // Если проверка прошла успешно, сохраняем учетные данные
+      useSessionStore.getState().setCredentials({
+        idInstance,
+        apiTokenInstance,
+      });
+    } catch {
+      // Устанавливаем ошибку формы
+      setFormError(t('auth.invalidCredentials'));
+    } finally {
+      setIsChecking(false);
+    }
   };
 
   return (
@@ -61,8 +76,9 @@ export const LoginForm = () => {
             onChange={(e) => setApiTokenInstance(e.target.value)}
             error={errors.apiTokenInstance}
           />
-          <Button type="submit" className="w-full">
-            {t('auth.submit')}
+          {formError && <p className="text-error text-sm">{formError}</p>}
+          <Button type="submit" className="w-full" disabled={isChecking}>
+            {isChecking ? t('auth.checking') : t('auth.submit')}
           </Button>
         </form>
       </div>
