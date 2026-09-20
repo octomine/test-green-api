@@ -54,7 +54,7 @@ pnpm format     # форматирование Prettier
 
 - shared/api — транспорт GREEN-API
 - shared/lib/longPolling — драйвер long polling
-- entities/* — Zustand-сторы
+- entities/* — доменные сущности (модель: типы и Zustand-сторы; UI: компоненты сущности)
 - features/* — пользовательские сценарии
 
 ## Особенности GREEN-API
