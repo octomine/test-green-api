@@ -67,7 +67,6 @@ src/
     │   └── index.ts
     ├── lib/
     │   ├── longPolling.ts
-    │   ├── storage.ts
     │   ├── cn.ts
     │   └── index.ts
     ├── ui/
@@ -153,7 +152,6 @@ Dark mode не поддерживается.
 - `shared/api/errors.ts` — HttpError
 - `shared/api/index.ts` — публичный API сегмента (реэкспорт всех функций)
 - `shared/lib/longPolling.ts` — синглтон longPolling
-- `shared/lib/storage.ts` — credentials в localStorage
 - `shared/lib/cn.ts` — clsx + tailwind-merge
 - `shared/ui/` — Button, Input, Textarea
 - `shared/i18n/` — react-i18next + ru.json

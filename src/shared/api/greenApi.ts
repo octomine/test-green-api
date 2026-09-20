@@ -55,9 +55,7 @@ export function deleteNotification(
   });
 }
 
-export function getStateInstance(
-  credentials: Credentials,
-): Promise<GetStateInstanceResponse> {
+export function getStateInstance(credentials: Credentials): Promise<GetStateInstanceResponse> {
   const { idInstance, apiTokenInstance } = credentials;
   const path = `/waInstance${idInstance}/getStateInstance/${apiTokenInstance}`;
   return httpRequest<GetStateInstanceResponse>(path, { method: 'GET' });

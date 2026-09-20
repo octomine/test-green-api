@@ -38,5 +38,6 @@ export type DeleteNotificationResponse = {
 };
 
 export type GetStateInstanceResponse = {
-  stateInstance: 'authorized' | 'notAuthorized' | 'blocked' | 'starting' | 'yellowCard' | 'suspended';
+  stateInstance:
+    'authorized' | 'notAuthorized' | 'blocked' | 'starting' | 'yellowCard' | 'suspended';
 };
