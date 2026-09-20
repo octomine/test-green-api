@@ -1,5 +1,6 @@
 import { receiveNotification, deleteNotification } from '../api';
 import type { Credentials, NotificationBody } from '../api';
+import { HttpError } from '../api';
 
 const RECEIVE_TIMEOUT = 30;
 
@@ -62,6 +63,11 @@ class LongPolling {
         // Если это AbortError (результат stop()), выходим из цикла
         if (error instanceof Error && error.name === 'AbortError') {
           break;
+        }
+
+        // Если это HTTP 408 (таймаут от GREEN-API), продолжаем цикл
+        if (error instanceof HttpError && error.status === 408) {
+          continue;
         }
 
         // Вызываем onError callback, если он определен

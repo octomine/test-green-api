@@ -1,75 +1,75 @@
-# React + TypeScript + Vite
+# GREEN-API MAX Chat
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Веб-чат для отправки и получения текстовых сообщений в мессенджере MAX через GREEN-API.
 
-Currently, two official plugins are available:
+## Стек
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React 19 + Vite + TypeScript
+- Zustand (стейт)
+- react-i18next (локализация)
+- Tailwind CSS v4
+- clsx + tailwind-merge
+- Prettier
+- pnpm
 
-## React Compiler
+## Требования
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Node.js 20.19+ или 22.12+ (требование Vite)
+- pnpm
 
-## Expanding the ESLint configuration
+## Установка и запуск
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+pnpm install
+pnpm dev
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+Открыть http://localhost:5173.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Другие команды:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+pnpm build      # production-сборка
+pnpm preview    # просмотр собранной версии
+pnpm format     # форматирование Prettier
 ```
+
+## Как пользоваться
+
+1. Открыть приложение.
+2. Ввести idInstance и apiTokenInstance из личного кабинета GREEN-API.
+3. Ввести номер телефона получателя (например, 79259091155).
+4. Написать сообщение и отправить (Enter или кнопка).
+5. Ответ собеседника появится в чате автоматически (long polling).
+
+Инстанс должен быть авторизован, webhookUrl — пустой (HTTP API не работает с вебхуком).
+
+## Архитектура
+
+Краткое описание FSD: app → pages → features → entities → shared.
+
+[Детали архитектуры](.clinerules/architecture.md)
+
+Ключевые модули:
+
+- shared/api — транспорт GREEN-API
+- shared/lib/longPolling — драйвер long polling
+- entities/* — Zustand-сторы
+- features/* — пользовательские сценарии
+
+## Особенности GREEN-API
+
+- Авторизация в URL — /waInstance{idInstance}/{method}/{apiTokenInstance}, не в заголовках.
+- Long polling — метод receiveNotification с receiveTimeout (5–60 сек). При таймауте возвращает пустой ответ — это норма.
+- Формат chatId при отправке — для РФ/РБ phone@c.us (например, 79259098192@c.us).
+- HTTP 408 — GREEN-API может возвращать при простое; обрабатывается в longPolling.
+
+## Известные ограничения / TODO
+
+- Только текст — медиа, документы, голосовые не поддерживаются (по требованиям).
+- Один активный чат — список чатов, переключение между ними не реализованы.
+- checkAccount не используется — из-за ограничений Developer-тарифа. chatId = номер телефона без +.
+- Фильтрация входящих — только личные чаты, от собеседника активного чата (по senderPhoneNumber).
+- Статус доставки — outgoingMessageStatus не обрабатывается, оптимистичное сообщение остаётся с временным id.
+- Обработка ошибок отправки — показывает сообщение в Textarea, но не удаляет оптимистичное сообщение из ленты.
+- Нет тестов — юнит-тесты не написаны.
