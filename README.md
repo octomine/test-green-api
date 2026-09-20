@@ -8,6 +8,7 @@
 - Zustand (стейт)
 - react-i18next (локализация)
 - Tailwind CSS v4
+- lucide-react
 - clsx + tailwind-merge
 - Prettier
 - pnpm
@@ -54,6 +55,8 @@ pnpm format     # форматирование Prettier
 
 - shared/api — транспорт GREEN-API
 - shared/lib/longPolling — драйвер long polling
+- shared/ui — UI-кит (Button, Input, Textarea)
+- shared/i18n — react-i18next + ru.json
 - entities/* — доменные сущности (модель: типы и Zustand-сторы; UI: компоненты сущности)
 - features/* — пользовательские сценарии
 
@@ -61,8 +64,10 @@ pnpm format     # форматирование Prettier
 
 - Авторизация в URL — /waInstance{idInstance}/{method}/{apiTokenInstance}, не в заголовках.
 - Long polling — метод receiveNotification с receiveTimeout (5–60 сек). При таймауте возвращает пустой ответ — это норма.
-- Формат chatId при отправке — для РФ/РБ phone@c.us (например, 79259098192@c.us).
+- Формат chatId при отправке — для РФ/РБ phone@c.us (например, 79259099977@c.us).
 - HTTP 408 — GREEN-API может возвращать при простое; обрабатывается в longPolling.
+- HTTP 401/403 — невалидные credentials или разлогиненный инстанс. Long polling останавливается, пользователь разлогинивается, возвращается на форму логина.
+- getStateInstance — используется на форме логина для проверки credentials до сохранения.
 
 ## Известные ограничения / TODO
 

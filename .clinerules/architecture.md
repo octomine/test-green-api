@@ -6,6 +6,7 @@
 - Zustand
 - react-i18next + i18next
 - Tailwind CSS v4 (через @tailwindcss/vite)
+- lucide-react
 - clsx + tailwind-merge (утилита cn)
 - Prettier (с prettier-plugin-tailwindcss)
 - pnpm
@@ -147,7 +148,7 @@ Dark mode не поддерживается.
 
 ### shared
 - `shared/api/httpClient.ts` — httpRequest<T> с поддержкой signal, 204, пустого тела
-- `shared/api/greenApi.ts` — sendMessage, receiveNotification, deleteNotification
+- `shared/api/greenApi.ts` — sendMessage, receiveNotification, deleteNotification, getStateInstance
 - `shared/api/types.ts` — DTO GREEN-API
 - `shared/api/errors.ts` — HttpError
 - `shared/api/index.ts` — публичный API сегмента (реэкспорт всех функций)
@@ -163,19 +164,20 @@ Dark mode не поддерживается.
 - `entities/message` — useMessageStore + MessageList, MessageBubble
 
 ### features
-- `features/auth` — LoginForm
-- `features/create-chat` — NewChatForm
+- `features/auth` — LoginForm, валидация credentials через getStateInstance перед сохранением
+- `features/create-chat` — NewChatForm, валидация номера (10–15 цифр, только цифры)
 - `features/send-message` — MessageInput + useSendMessage (оптимистичная отправка, обработка ошибок)
 
 ### pages / app
 - `pages/chat` — ChatPage (три состояния)
-- `app/providers/LongPollingProvider` — управляет longPolling, обрабатывает входящие
+- `app/providers/LongPollingProvider` — управляет жизненным циклом longPolling; фильтрует входящие по chatType и senderPhoneNumber; обрабатывает 401/403 через logout
 
 ## Особенности GREEN-API
 
 - Авторизация в URL: /waInstance{id}/{method}/{token}
 - receiveNotification возвращает null при таймауте (это НЕ ошибка)
 - HTTP 408 от GREEN-API при простое — обрабатывать как continue
+- HTTP 401/403 — невалидные credentials. long polling останавливается, пользователь разлогинивается.
 - Отправка на РФ/РБ — chatId в формате phone@c.us
 - В сторе chatId без @c.us, конвертация — только при API-вызове
 - Входящие уведомления содержат senderData:
