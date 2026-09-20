@@ -2,6 +2,8 @@
 
 Веб-чат для отправки и получения текстовых сообщений в мессенджере MAX через GREEN-API.
 
+**Демо:** https://test-green-api-beige.vercel.app/
+
 ## Стек
 
 - React 19 + Vite + TypeScript
@@ -37,7 +39,7 @@ pnpm format     # форматирование Prettier
 
 ## Как пользоваться
 
-1. Открыть приложение.
+1. Открыть приложение — `https://test-green-api-beige.vercel.app/` или локально `http://localhost:5173`.
 2. Ввести idInstance и apiTokenInstance из личного кабинета GREEN-API.
 3. Ввести номер телефона получателя (например, 79259091155).
 4. Написать сообщение и отправить (Enter или кнопка).
